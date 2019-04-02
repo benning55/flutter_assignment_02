@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import './ui/Task.dart';
 import './ui/NewSubject.dart';
+import './ui/TodoList.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,10 +15,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/new-subject',
+      initialRoute: '/',
       routes: {
         "/": (context) => Task(),
-        "/new-subject": (context) => NewSubject()
       }
     );
   }

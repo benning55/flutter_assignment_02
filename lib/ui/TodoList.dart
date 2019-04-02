@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
-import "./../models/Note.dart";
-import '../utils/DatabaseManage.dart';
+import './NewSubject.dart';
 import '../models/Note.dart';
+import '../utils/DatabaseManage.dart';
 
-class Complete extends StatefulWidget {
+class TodoList extends StatefulWidget {
   @override
-  CompleteWidgetState createState() => new CompleteWidgetState();
+  TodoListWidgetState createState() => new TodoListWidgetState();
 }
 
-class CompleteWidgetState extends State<Complete> {
-  List<Note> items = new List();
+class TodoListWidgetState extends State<TodoList> {
+  List<Note> items = new List(); // List to Show a data
   DatabaseManage db = new DatabaseManage();
+  //DatabaseHelper databaseHelper = DatabaseHelper();
+  //List<Note> noteList;
+  int count = 0;
 
   @override
   void initState() {
     super.initState();
-    db.getAllFinish().then((notes) {
+
+    db.getAllNote().then((notes) {
       setState(() {
         notes.forEach((note) {
           items.add(Note.fromMap(note));
@@ -26,40 +30,43 @@ class CompleteWidgetState extends State<Complete> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     if (items.length == 0) {
       return Scaffold(
         appBar: AppBar(
           title: const Text("Todo"),
           actions: <Widget>[
             IconButton(
-              icon: Icon(Icons.delete),
+              icon: Icon(Icons.add),
+              onPressed: () => _navigateToNewSub(context),
+            )
+          ],
+        ),
+        body: Center(
+          child: new Text(
+            "No data found..",
+            textAlign: TextAlign.center,
+          ),
+        ),
+      );
+    } else {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text("Todo"),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.add),
               onPressed: () {
-                _deleteAllNote(context);
+                //push to task page
+                debugPrint('Add button');
+                _navigateToNewSub(context);
               },
             )
           ],
         ),
         body: Center(
-          child: Text("No data found..", textAlign: TextAlign.center),
+          child: getTaskListView(),
         ),
       );
-    } else {
-      return Scaffold(
-          appBar: AppBar(
-            title: const Text("Todo"),
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.delete),
-                onPressed: () {
-                  _deleteAllNote(context);
-                },
-              )
-            ],
-          ),
-          body: Center(
-            child: getTaskListView(),
-          ));
     }
   }
 
@@ -76,12 +83,12 @@ class CompleteWidgetState extends State<Complete> {
             child: ListTile(
               title: Text(i['title'], style: titleStyle),
               trailing: Checkbox(
-                value: i['finish'] == 0 ? false : true,
+                value: i['finish'] == 1 ? false : true,
                 onChanged: (bool value) {
                   setState(() {
                     db.updateNote(Note.fromMap(
-                        {'id': i['id'], 'title': i['title'], 'finish': false}));
-                    db.getAllFinish().then((notes) {
+                        {'id': i['id'], 'title': i['title'], 'finish': true}));
+                    db.getAllNote().then((notes) {
                       setState(() {
                         items.clear();
                         notes.forEach((note) {
@@ -92,14 +99,22 @@ class CompleteWidgetState extends State<Complete> {
                   });
                 },
               ),
+              /*onTap: () {
+                debugPrint('List Title Tap');
+                navigateToNewSub(this.noteList[position]);
+              },*/
             ),
           );
         });
   }
 
-  void _deleteAllNote(BuildContext context) async {
-    db.deleteAllDone();
-    db.getAllFinish().then((notes) {
+  void _navigateToNewSub(BuildContext context) async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => NewSubject(Note.getValue(''))),
+    );
+
+    db.getAllNote().then((notes) {
       setState(() {
         items.clear();
         notes.forEach((note) {
