@@ -12,13 +12,7 @@ class Note {
   String get title => _title;
   int get finish => _finish;
 
-  Map<String, dynamic> toMap() {
-    Map<String, dynamic> map = {colTitle: _title, colFinish: _finish};
-    if (_id != null) {
-      map[colId] = _id;
-    }
-    return map;
-  }
+  Note();
 
   Note.fromMap(Map<String, dynamic> map) {
     this._id = map['id'];
@@ -37,5 +31,11 @@ class Note {
     this._finish = object['finish'];
   }
 
-  Note();
+  Map<String, dynamic> toMap() {
+    Map<String, dynamic> map = {colTitle: _title, colFinish: _finish};
+    if (_id != null) {
+      map[colId] = _id;
+    }
+    return map;
+  }
 }
