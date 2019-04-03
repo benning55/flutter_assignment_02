@@ -34,14 +34,12 @@ class DatabaseManage {
         'CREATE TABLE $noteTable($colId INTEGER PRIMARY KEY AUTOINCREMENT, $colTitle TEXT, $colFinish TEXT)');
   }
 
-  // save naw task from addItemscreen
   Future<int> saveNewNote(Note note) async {
     var dbClient = await db;
     var result = await dbClient.insert(noteTable, note.toMap());
     return result;
   }
 
-  // get all note : 0 is not finished
   Future<List> getAllNote() async {
     var dbClient = await db;
     List<Map> result = await dbClient.query(noteTable,
@@ -51,7 +49,6 @@ class DatabaseManage {
     return result;
   }
 
-  // get data that finished
   Future<List> getAllFinish() async {
     var dbClient = await db;
     List<Map> result = await dbClient.query(noteTable,
@@ -61,21 +58,18 @@ class DatabaseManage {
     return result;
   }
 
-  // delete
   Future<int> deleteAllDone() async {
     var dbClient = await db;
     return await dbClient
         .delete(noteTable, where: '$colFinish = ?', whereArgs: [1]);
   }
 
-  // update between finised and not
   Future<int> updateNote(Note note) async {
     var dbClient = await db;
     return await dbClient.update(noteTable, note.toMap(),
         where: "$colId = ?", whereArgs: [note.id]);
   }
 
-  // close database (not use)
   Future close() async {
     var dbClient = await db;
     return dbClient.close();
