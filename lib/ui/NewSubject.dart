@@ -19,7 +19,6 @@ class NewSubjectState extends State<NewSubject> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _inputController;
 
-  //NewSubjectState(this.note);
   @override
   void initState() {
     super.initState();

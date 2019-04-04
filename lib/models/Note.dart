@@ -8,16 +8,28 @@ class Note {
   String _title;
   int _finish;
 
-  int get id => _id;
-  String get title => _title;
-  int get finish => _finish;
+  int get id {
+    return _id;
+  }
+
+  String get title {
+    return _title;
+  }
+
+  int get finish {
+    return _finish;
+  }
 
   Note();
 
   Note.fromMap(Map<String, dynamic> map) {
     this._id = map['id'];
     this._title = map['title'];
-    this._finish = map['finish'] == false ? 0 : 1;
+    if (map['finish'] == false) {
+      this._finish = 0;
+    } else {
+      this._finish = 1;
+    }
   }
 
   Note.getValue(title) {

@@ -11,8 +11,7 @@ class TodoList extends StatefulWidget {
 class TodoListWidgetState extends State<TodoList> {
   List<Note> items = new List(); // List to Show a data
   DatabaseManage db = new DatabaseManage();
-  //DatabaseHelper databaseHelper = DatabaseHelper();
-  //List<Note> noteList;
+
   int count = 0;
 
   @override
@@ -99,10 +98,6 @@ class TodoListWidgetState extends State<TodoList> {
                   });
                 },
               ),
-              /*onTap: () {
-                debugPrint('List Title Tap');
-                navigateToNewSub(this.noteList[position]);
-              },*/
             ),
           );
         });
