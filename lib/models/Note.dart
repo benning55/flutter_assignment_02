@@ -1,12 +1,12 @@
-final String noteTable = 'note_table';
+final String todoTable = 'todo';
 final String colId = 'id';
 final String colTitle = 'title';
-final String colFinish = 'finish';
+final String colDone = 'done';
 
 class Note {
   int _id;
   String _title;
-  int _finish;
+  int _done;
 
   int get id {
     return _id;
@@ -17,7 +17,7 @@ class Note {
   }
 
   int get finish {
-    return _finish;
+    return _done;
   }
 
   Note();
@@ -25,26 +25,26 @@ class Note {
   Note.fromMap(Map<String, dynamic> map) {
     this._id = map['id'];
     this._title = map['title'];
-    if (map['finish'] == false) {
-      this._finish = 0;
+    if (map['done'] == false) {
+      this._done = 0;
     } else {
-      this._finish = 1;
+      this._done = 1;
     }
   }
 
   Note.getValue(title) {
     this._title = title;
-    this._finish = 0;
+    this._done = 0;
   }
 
   Note.map(dynamic object) {
     this._id = object['id'];
     this._title = object['title'];
-    this._finish = object['finish'];
+    this._done = object['done'];
   }
 
   Map<String, dynamic> toMap() {
-    Map<String, dynamic> map = {colTitle: _title, colFinish: _finish};
+    Map<String, dynamic> map = {colTitle: _title, colDone: _done};
     if (_id != null) {
       map[colId] = _id;
     }

@@ -76,11 +76,11 @@ class CompleteWidgetState extends State<Complete> {
             child: ListTile(
               title: Text(i['title'], style: titleStyle),
               trailing: Checkbox(
-                value: i['finish'] == 0 ? false : true,
+                value: i['done'] == 0 ? false : true,
                 onChanged: (bool value) {
                   setState(() {
                     db.updateNote(Note.fromMap(
-                        {'id': i['id'], 'title': i['title'], 'finish': false}));
+                        {'id': i['id'], 'title': i['title'], 'done': false}));
                     db.getAllFinish().then((notes) {
                       setState(() {
                         items.clear();

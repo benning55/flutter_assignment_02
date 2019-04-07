@@ -82,11 +82,11 @@ class TodoListWidgetState extends State<TodoList> {
             child: ListTile(
               title: Text(i['title'], style: titleStyle),
               trailing: Checkbox(
-                value: i['finish'] == 1 ? false : true,
+                value: i['done'] == 1 ? false : true,
                 onChanged: (bool value) {
                   setState(() {
                     db.updateNote(Note.fromMap(
-                        {'id': i['id'], 'title': i['title'], 'finish': true}));
+                        {'id': i['id'], 'title': i['title'], 'done': true}));
                     db.getAllNote().then((notes) {
                       setState(() {
                         items.clear();
